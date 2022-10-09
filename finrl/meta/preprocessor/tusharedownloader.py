@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import pandas as pd
 import tushare as ts
+# token='829a1fbce8eb0e34f05ab19906d0e08227c6f64261a81272aa078ccd'
+# pro=ts.pro_api(token)
 from tqdm import tqdm
 
 

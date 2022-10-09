@@ -82,6 +82,9 @@ class FeatureEngineer:
         # clean data
         df = self.clean_data(df)
 
+        # fill the missing values at the beginning and the end
+        df = df.fillna(method="ffill").fillna(method="bfill")
+
         # add technical indicators using stockstats
         if self.use_technical_indicator:
             df = self.add_technical_indicator(df)
@@ -118,7 +121,9 @@ class FeatureEngineer:
         df = df.sort_values(["date", "tic"], ignore_index=True)
         df.index = df.date.factorize()[0]
         merged_closes = df.pivot_table(index="date", columns="tic", values="close")
-        merged_closes = merged_closes.dropna(axis=1)
+        merged_closes = merged_closes.dropna(
+            axis=1, how="all"
+        )  # drop stocks with all NaN values
         tics = merged_closes.columns
         df = df[df.tic.isin(tics)]
         # df = data.copy()
@@ -155,8 +160,12 @@ class FeatureEngineer:
                     temp_indicator["date"] = df[df.tic == unique_ticker[i]][
                         "date"
                     ].to_list()
-                    indicator_df = indicator_df.append(
-                        temp_indicator, ignore_index=True
+                    # frame.append is deprecated, use concat instead
+                    # indicator_df = indicator_df.append(
+                    #     temp_indicator, ignore_index=True
+                    # )
+                    indicator_df = pd.concat(
+                        [indicator_df, temp_indicator], ignore_index=True
                     )
                 except Exception as e:
                     print(e)
