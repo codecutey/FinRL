@@ -121,9 +121,11 @@ class FeatureEngineer:
         df = df.sort_values(["date", "tic"], ignore_index=True)
         df.index = df.date.factorize()[0]
         merged_closes = df.pivot_table(index="date", columns="tic", values="close")
+        # get data length
+        data_length = len(merged_closes)
         merged_closes = merged_closes.dropna(
-            axis=1, how="all"
-        )  # drop stocks with all NaN values
+            axis=1, thresh=int(data_length * (90 / 100))
+        )  # drop stocks with more than 10% missing data
         tics = merged_closes.columns
         df = df[df.tic.isin(tics)]
         # df = data.copy()
