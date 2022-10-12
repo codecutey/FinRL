@@ -137,7 +137,6 @@ dmypy.json
 # PyCharm
 .idea
 
-*events.out.tfevents.*
 # *.csv
 *.zip
 *.png
