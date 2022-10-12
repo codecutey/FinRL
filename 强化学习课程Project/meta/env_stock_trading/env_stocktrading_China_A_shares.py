@@ -253,8 +253,7 @@ class StockTradingEnv(gym.Env):
                 )
                 plt.plot(self.asset_memory, "r")
                 plt.savefig(
-                    f"results/account_value_{self.mode}_{self.model_name}_{self.iteration}.png",
-                    index=False,
+                    f"results/account_value_{self.mode}_{self.model_name}_{self.iteration}.png"
                 )
                 plt.close()
 
