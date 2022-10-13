@@ -138,8 +138,8 @@ dmypy.json
 .idea
 
 # *.csv
-*.zip
-*.png
+# *.zip
+# *.png
 finrl_test.py
 test_plugplay.py
 papertrading_test.py
